@@ -23,6 +23,6 @@
 
 @end
 
-@protocol AppSpec
+@protocol AppSpecTest
 @end
 

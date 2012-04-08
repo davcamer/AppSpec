@@ -55,7 +55,7 @@ static UIConsoleLog *logger = nil;
 }
 
 +(void)runExamples:(NSArray *)examples onSpec:(Class )class {
-	AppSpec *spec = [[[AppSpec alloc] init] autorelease];
+	id spec = [[[class alloc] init] autorelease];
 	[logger onSpec:spec];
 	if ([spec respondsToSelector:@selector(beforeAll)]) {
 		@try {
@@ -130,7 +130,7 @@ static UIConsoleLog *logger = nil;
 +(BOOL)isASpec:(Class)class {
 	//Class spec = NSClassFromString(@"UISpec");
 	while (class) {
-		if (class_conformsToProtocol(class, NSProtocolFromString(@"AppSpec"))) {
+		if (class_conformsToProtocol(class, NSProtocolFromString(@"AppSpecTest"))) {
 			return YES;
 		}
 		class = class_getSuperclass(class);
@@ -139,7 +139,7 @@ static UIConsoleLog *logger = nil;
 }
 
 +(NSArray*)specClasses {
-	NSMutableArray *array = [NSMutableArray array];
+	NSMutableArray *array = [[[NSMutableArray alloc] init] autorelease];
     int numClasses = objc_getClassList(NULL, 0);
     if (numClasses > 0) {
         Class *classes = malloc(sizeof(Class) * numClasses);
