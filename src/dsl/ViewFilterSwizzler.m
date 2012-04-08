@@ -43,6 +43,8 @@
 	[self swizzleFiltersForClass:[self class]];
 }
 
+// For each of the properties listed above, this method will dynamically add a method
+// to the class, the implementation tied to "templateFilter", which is implemented on UIQuery
 +(void)swizzleFiltersForClass:(Class )class {
 	int i = 0;
     unsigned int propertyCount = 0;

@@ -1,3 +1,7 @@
+//
+// Used to dynamically add all of the properties as methods onto UIQuery.
+// This allows you to use <UIQueryInstance>.button, for example, in order to find a button
+// Not sure why this is not embedded directly into UIQuery.
 
 @class UIQuery;
 

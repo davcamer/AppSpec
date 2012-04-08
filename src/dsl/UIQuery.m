@@ -91,9 +91,12 @@
 	return copy;
 }
 
+/* This method is gets called by specs when you use dot-notation to get to a specific view in a class.  For example, when you call:
+   app.button, the "button" method gets resolved to this method.  It converts the "button" to NSButton and tries to find the NSButton
+   on the parent */
 -(id)templateFilter {
 	NSString *viewName = NSStringFromSelector(_cmd);
-	return [self view:[NSString stringWithFormat:@"UI%@", [viewName stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[viewName substringWithRange:NSMakeRange(0,1)] uppercaseString]]]];
+	return [self view:[NSString stringWithFormat:@"NS%@", [viewName stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[viewName substringWithRange:NSMakeRange(0,1)] uppercaseString]]]];
 }
 
 -(UIQuery *)index:(int)index {
