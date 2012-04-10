@@ -18,7 +18,7 @@
 }
 
 -(id)play {
-	//NSLog(@"**START playing %@", NSStringFromSelector(invocation.selector));
+	NSLog(@"**START playing %@", NSStringFromSelector(invocation.selector));
 	[invocation setTarget:target];
 	[invocation invoke];
 	NSString *returnType = [NSString stringWithFormat:@"%s", [[invocation methodSignature] methodReturnType]];

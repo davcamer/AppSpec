@@ -17,9 +17,12 @@
 }
 
 -(void)collectDescendantsOnView:(NSView *)view inToArray:(NSMutableArray *)array {
+    NSLog(@"Collect Descendants for View ClassName %@", NSStringFromClass([view class]));
 	NSArray *subViews = nil;
     if ([view isKindOfClass:[NSApplication class]])
          subViews = [(NSApplication *)view windows];
+    else if ([view isKindOfClass:[NSWindow class]])
+        subViews = [NSArray arrayWithObject:[(NSWindow *)view contentView]];
     else
          subViews = [view subviews];
          

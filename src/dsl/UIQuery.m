@@ -24,10 +24,31 @@
 @synthesize redoer;
 @synthesize first, last, all, redo;
 
+#pragma mark initializers
 +(id)withApplication {
-	return [self withViews:[NSMutableArray arrayWithObject:[NSApplication sharedApplication]] className:NSStringFromClass([NSApplication class])];
+	return [self withViews:[NSArray arrayWithObject:[NSApplication sharedApplication]] className:NSStringFromClass([NSApplication class])];
 }
 
++(id)withViews:(NSArray *)views className:(NSString *)className {
+	return [UIRedoer withTarget:[[[self alloc] initWithViews:views className:className filter:NO] autorelease]];
+}
+
++(id)withViews:(NSArray *)views className:(NSString *)className filter:(BOOL)filter {
+	return [UIRedoer withTarget:[[[self alloc] initWithViews:views className:className filter:filter] autorelease]];
+}
+
+
+-(id)initWithViews:(NSArray *)_views className:(NSString *)_className filter:(BOOL)_filter {
+	if (self = [super init]) {
+		timeout = 10;
+		views = [[[NSMutableArray alloc] initWithArray:_views] autorelease];
+		className = _className;
+		filter = _filter;
+	}
+	return self;
+}
+
+#pragma mark query methods
 -(UIQuery *)find {
 	return [self descendant];
 }
@@ -55,23 +76,7 @@
 	return [UIFilter withQuery:self];
 }
 
-+(id)withViews:(NSArray *)views className:(NSString *)className {
-	return [UIRedoer withTarget:[[[self alloc] initWithViews:views className:className filter:NO] autorelease]];
-}
 
-+(id)withViews:(NSArray *)views className:(NSString *)className filter:(BOOL)filter {
-	return [UIRedoer withTarget:[[[self alloc] initWithViews:views className:className filter:filter] autorelease]];
-}
-
--(id)initWithViews:(NSArray *)_views className:(NSString *)_className filter:(BOOL)_filter {
-	if (self = [super init]) {
-		timeout = 10;
-		views = [[[NSMutableArray alloc] initWithArray:_views] autorelease];
-		className = _className;
-		filter = _filter;
-	}
-	return self;
-}
 
 -(NSArray *)collect:(NSArray *)some_views {
 	return [[[[UIDescendants alloc] init] autorelease] collect:some_views];
@@ -95,6 +100,7 @@
    app.button, the "button" method gets resolved to this method.  It converts the "button" to NSButton and tries to find the NSButton
    on the parent */
 -(id)templateFilter {
+    NSLog(@"Trying to get the command: %@", NSStringFromSelector(_cmd));
 	NSString *viewName = NSStringFromSelector(_cmd);
 	return [self view:[NSString stringWithFormat:@"NS%@", [viewName stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[viewName substringWithRange:NSMakeRange(0,1)] uppercaseString]]]];
 }
@@ -157,7 +163,7 @@
 }
 
 -(id)redo {
-	//NSLog(@"UIQuery redo");
+	NSLog(@"UIQuery redo");
 	if (redoer != nil) {
 		//NSLog(@"UIQuery redo redoer = %@", redoer);
 		UIRedoer *redone = [redoer redo];
