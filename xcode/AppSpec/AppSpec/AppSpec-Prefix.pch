@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'AppSpec' target in the 'AppSpec' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
