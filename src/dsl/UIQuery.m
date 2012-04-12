@@ -412,12 +412,12 @@
     return nil;
 }
 
-- (UIQuery *)buttonPress {
+- (UIQuery *)click {
     [[UIQueryExpectation withQuery:self] exist:@"before you can press it"];
     //	
     for (NSView *view in [self targetViews]) {
         //Simulate the click of a button here? Or should it be a mouse click?
-        NSLog(@"Button pressed");
+        NSLog(@"Button pressed, Nerd");
 
         [self wait:.5];
     }

@@ -62,7 +62,7 @@
 -(UIQuery *)path;
 //-(UIQuery *)inspect;
 - (UIQuery *)touch;
-- (UIQuery *) buttonPress;
+- (UIQuery *) click;
 -(NSString *)description;
 -(void)logRange:(NSString *)prefix range:(NSRange)range;
 
